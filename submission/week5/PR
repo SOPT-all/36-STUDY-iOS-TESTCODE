@@ -1,0 +1,103 @@
+### 1. 과제 내용
+
+✅ **네트워킹 처리를 통한 **일별 박스오피스 순위** 화면 구성**
+
+### 2. 고민 포인트
+
+✅ **네트워킹 처리의 책임은 누구에게 있을까?**
+
+🎈Model, View, Controller 중 Controller에 네트워킹 처리를 구현
+- 네트워킹을 통해 받아온 데이터를 뷰에 전달할 수 있어야 하며, 이 역할은 Controller에 있다고 판단했습니다.
+
+✅ **모델 설정**
+
+🎈Postman 테스트를 통해 일별 박스오피스 순위 GET 요청 시 응답 구조 분석
+
+<img width="345" alt="스크린샷 2025-05-11 오후 5 17 28" src="https://github.com/user-attachments/assets/778b4ec3-8e41-47c6-aa30-fd091d5ec911" />
+
+🎈모델 설정
+
+```
+struct MovieData: Codable {
+    let boxOfficeResult: BoxOfficeResult
+}
+
+struct BoxOfficeResult: Codable {
+    let dailyBoxOfficeList: [DailyBoxOfficeList]
+}
+
+struct DailyBoxOfficeList: Codable {
+    let rank: String
+    let movieNm: String
+    let audiAcc: String
+    let rankOldAndNew: String
+}
+```
+
+✅ **함수 분리**
+
+🎈네트워킹 과정을 명확히 하기 위해서 함수를 최대한 분리해보았습니다
+- makeURL --> url 문자열, key값, 타겟 날짜를 파라미터로 받아 URL 인스턴스 생성
+- makeRequest --> url을 통해 URLRequest 인스턴스 생성
+- sendRequest --> URLSession에 요청을 전송하여 응답을 얻음
+- decode --> 설정한 모델에 따라 디코딩 진행
+- getTopTenRank --> filter 고차함수를 통해 박스오피스 순위에서 상위 10개만 가져오기
+
+```
+extension BoxofficeViewController {
+    
+    private func fetchBoxOfficeList() async throws -> [DailyBoxOfficeList] {
+        let url = try makeURL(movieInfoUrlString, key, targetDt)
+        let request = makeRequest(url: url)
+        let (data, _) = try await sendRequest(request: request)
+        let boxofficeList = try decode(data)
+
+        return getTopTenRank(boxofficeList)
+    }
+    
+    private func makeURL(_ urlString: String,
+                         _ key: String,
+                         _ targetDt: String) throws -> URL {
+        
+        guard let url = URL(string: "\(urlString)?key=\(key)&targetDt=\(targetDt)") else {
+            throw NetworkError.notFoundError
+        }
+        return url
+    }
+    
+    private func makeRequest(url: URL) -> URLRequest {
+        return URLRequest(url: url)
+    }
+    
+    private func sendRequest(request: URLRequest) async throws -> (Data, URLResponse) {
+        return try await URLSession.shared.data(for: request)
+    }
+    
+    private func decode(_ data: Data) throws -> [DailyBoxOfficeList] {
+        do {
+            let decoded = try JSONDecoder().decode(MovieData.self, from: data)
+            let boxofficeList = decoded.boxOfficeResult.dailyBoxOfficeList
+            return boxofficeList
+        } catch {
+            throw NetworkError.responseDecodingError
+        }
+    }
+    
+    private func getTopTenRank(_ boxofficeList: [DailyBoxOfficeList]) -> [DailyBoxOfficeList] {
+        return boxofficeList.filter { Int($0.rank)! <= totalRank }
+    }
+}
+```
+
+✅ **구현 화면**
+
+🎈Welcome 화면에 '일별 박스오피스' 버튼 추가
+
+<img width="200" alt="welcome" src="https://github.com/user-attachments/assets/66ff33a8-d0c3-4e6e-b9f7-407e0210d08c" />
+
+<br>
+
+🎈BoxofficeView 구성 : CollectionView 활용하여 순위, 영화명, 관객수(커스텀), NEW 키워드를 보여줌
+
+<img width="200" alt="boxoffice" src="https://github.com/user-attachments/assets/0955a8dc-5886-4364-bfe6-ef04043834f9" />
+
