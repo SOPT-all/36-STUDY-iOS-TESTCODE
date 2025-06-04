@@ -15,6 +15,7 @@ final class CurrencyCalculatorTests: XCTestCase {
         let calculator = CurrencyCalculator()
         
         //Then
-        XCTAssertNil(calculator, "환율계산기 앱")
+        XCTAssertNotNil(calculator, "환율계산기 앱")
+//     XCTAssertNil(calculator, "환율계산기 앱")
     }
 }
