@@ -13,10 +13,11 @@ enum CurrencyType: String {
 }
 
 final class CurrencyCalculator {
-    func convertToUSD(amount: Int,
+    static let shared = CurrencyCalculator()
+    func convertToUSD(amount: Double,
                       from: CurrencyType,
                       to: CurrencyType,
-                      rate: Int) -> Int {
+                      rate: Double) -> Double {
         
         if from == .USD && to == .KRW {
             return amount * rate

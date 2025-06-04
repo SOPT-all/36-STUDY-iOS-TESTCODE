@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		46A67D382DF00E1600C4D02A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 46A67D372DF00E1600C4D02A /* SnapKit */; };
+		46A67D3B2DF00F9600C4D02A /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 46A67D3A2DF00F9600C4D02A /* Then */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		46A67C422DEFF0F200C4D02A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -65,6 +70,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46A67D382DF00E1600C4D02A /* SnapKit in Frameworks */,
+				46A67D3B2DF00F9600C4D02A /* Then in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +132,8 @@
 			);
 			name = CurrencyCalculator;
 			packageProductDependencies = (
+				46A67D372DF00E1600C4D02A /* SnapKit */,
+				46A67D3A2DF00F9600C4D02A /* Then */,
 			);
 			productName = CurrencyCalculator;
 			productReference = 46A67C2B2DEFF0F000C4D02A /* CurrencyCalculator.app */;
@@ -208,6 +217,10 @@
 			);
 			mainGroup = 46A67C222DEFF0F000C4D02A;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				46A67D362DF00E1600C4D02A /* XCRemoteSwiftPackageReference "SnapKit" */,
+				46A67D392DF00F9600C4D02A /* XCRemoteSwiftPackageReference "Then" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 46A67C2C2DEFF0F000C4D02A /* Products */;
 			projectDirPath = "";
@@ -571,6 +584,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		46A67D362DF00E1600C4D02A /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+		46A67D392DF00F9600C4D02A /* XCRemoteSwiftPackageReference "Then" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/devxoul/Then";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		46A67D372DF00E1600C4D02A /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 46A67D362DF00E1600C4D02A /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		46A67D3A2DF00F9600C4D02A /* Then */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 46A67D392DF00F9600C4D02A /* XCRemoteSwiftPackageReference "Then" */;
+			productName = Then;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 46A67C232DEFF0F000C4D02A /* Project object */;
 }
