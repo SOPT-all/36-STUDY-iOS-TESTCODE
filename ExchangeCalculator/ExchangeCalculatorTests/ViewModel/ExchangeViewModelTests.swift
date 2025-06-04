@@ -20,4 +20,15 @@ final class ExchangeViewModelTests: XCTestCase {
         
         XCTAssertEqual(krw, 0)
     }
+    
+    func testFetchExchange() async throws {
+        let expectation = XCTestExpectation(description: "환율_가져오기_성공")
+        
+        let exchangeModel = ExchangeModel(data: "1,450")
+        let exchangeViewModel = ExchangeViewModel(exchangeModel: exchangeModel)
+        
+        let receivedData = try await exchangeViewModel.fetchExchange()
+                
+        XCTAssertEqual(receivedData, "1,450")
+    }
 }

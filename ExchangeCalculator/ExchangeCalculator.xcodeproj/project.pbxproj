@@ -39,7 +39,6 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Model/ExchangeModelTests.swift,
-				Service/FetchExchangeServiceTests.swift,
 				ViewModel/ExchangeViewModelTests.swift,
 			);
 			target = 18EAA00B2DEFE055007D6782 /* ExchangeCalculator */;
@@ -48,7 +47,6 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Model/ExchangeModelTests.swift,
-				Service/FetchExchangeServiceTests.swift,
 				ViewModel/ExchangeViewModelTests.swift,
 			);
 			target = 18EAA0212DEFE056007D6782 /* ExchangeCalculatorTests */;

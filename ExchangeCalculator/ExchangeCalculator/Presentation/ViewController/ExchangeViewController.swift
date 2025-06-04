@@ -3,7 +3,6 @@ import UIKit
 final class ExchangeViewController: UIViewController {
     
     private let exchangeView = ExchangeView()
-    private let exchangeService = FetchExchangeService()
     private var exchangeViewModel: ExchangeViewModel?
     private var data = ""
     
@@ -44,22 +43,19 @@ final class ExchangeViewController: UIViewController {
     @objc
     private func checkButtonDidTap() {
         Task {
-            data = try await exchangeService.fetchExchange()
-            
-            exchangeViewModel = ExchangeViewModel(exchangeModel: ExchangeModel(data: data))
-            
-            guard let model = exchangeViewModel else {
-                return
-            }
-            
             guard let text = exchangeView.inputTextField.text,
                   let usd = Int(text) else {
                 exchangeView.exchangeTextField.text = "숫자를 입력해주세요"
                 return
             }
             
+            let tempViewModel = ExchangeViewModel(exchangeModel: ExchangeModel(data: "0"))
+            let fetchedData = try await tempViewModel.fetchExchange()
+            
+            exchangeViewModel = ExchangeViewModel(exchangeModel: ExchangeModel(data: fetchedData))
+            
+            guard let model = exchangeViewModel else { return }
             let result = model.calculateKRW(forUSD: usd)
-            print(result)
             exchangeView.exchangeTextField.text = "\(result) 원"
         }
     }
