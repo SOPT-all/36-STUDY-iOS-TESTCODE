@@ -25,7 +25,7 @@ final class HomeView: UIView {
             $0.contentMode = .scaleToFill
             $0.layer.cornerRadius = 4
             $0.layer.borderWidth = 1
-            $0.layer.borderColor = UIColor.lightGray.cgColor
+            $0.layer.borderColor = UIColor.clear.cgColor
         }
         
         showExchangeButton.do {
@@ -42,8 +42,8 @@ final class HomeView: UIView {
     
     private func setLayout() {
         americaImageView.snp.makeConstraints {
-            //$0.top.equalToSuperview().inset(50)
-            $0.center.equalToSuperview()
+            $0.top.equalToSuperview().inset(300)
+            $0.centerX.equalToSuperview()
             $0.width.equalTo(300)
             $0.height.equalTo(180)
         }
