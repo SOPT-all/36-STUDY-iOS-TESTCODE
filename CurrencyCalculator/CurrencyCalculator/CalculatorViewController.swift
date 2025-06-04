@@ -19,6 +19,19 @@ final class CalculatorViewController: UIViewController {
     let toAmountSuffixLabel = UILabel()
     var toAmountLabels: [UILabel] = []
     var toAmountTopConstraints: [NSLayoutConstraint] = []
+    var rate: Double = 1300
+    
+    private let exchangeRateService: ExchangeRateServiceProtocol
+       
+       init(exchangeRateService: ExchangeRateServiceProtocol = ExchangeRateService()) {
+           self.exchangeRateService = exchangeRateService
+           super.init(nibName: nil, bundle: nil)
+       }
+       
+       required init?(coder: NSCoder) {
+           self.exchangeRateService = ExchangeRateService()
+           super.init(coder: coder)
+       }
     
     
     override func viewDidLoad() {
@@ -28,6 +41,7 @@ final class CalculatorViewController: UIViewController {
         setupStyle()
         setupLayout()
         fromAmountTextField.delegate = self
+        fetchExchangeRate()
     }
     
     private func setupUI() {
@@ -180,7 +194,7 @@ extension CalculatorViewController: UITextFieldDelegate {
 extension CalculatorViewController {
     private func updateConversionAmount(text: String) {
         guard let amount = Double(text.replacingOccurrences(of: ",", with: "")) else {return}
-        let rate = 1400.0
+        let rate = self.rate
         let convertUSD = CurrencyCalculator.shared.convertToUSD(
             amount: amount,
             from: .KRW,
@@ -280,6 +294,25 @@ extension CalculatorViewController {
        }
 }
 
+extension CalculatorViewController {
+    private func fetchExchangeRate() {
+        let url = "안알랴줌"
+
+        exchangeRateService.fetchExchangeRate(from: url) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let response):
+                    print("환율 조회 성공:", response.data)
+                    self?.rate = Double(response.data.replacingOccurrences(of: ",", with: "")) ?? 0.0
+                    
+                case .failure(let error):
+                    print("환율 조회 실패:", error)
+                }
+            }
+        }
+    }
+
+}
 
 
 extension String {
