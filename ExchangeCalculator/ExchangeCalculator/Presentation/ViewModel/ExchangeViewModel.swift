@@ -2,16 +2,33 @@ import UIKit
 
 final class ExchangeViewModel {
     
-    let exchangeModel: ExchangeModel
     private let baseURLString = "https://98107e2c-a68e-4e89-bacf-85f13c9a1652.mock.pstmn.io/money"
     
-    init(exchangeModel: ExchangeModel) {
-        self.exchangeModel = exchangeModel
+    var onKRWCalculated: ((String) -> Void)?
+    var onError: ((String) -> Void)?
+    
+    func fetchAndCalculateKRW(forUSD: Int) {
+        Task {
+            do {
+                let fetchedExchange = try await fetchExchange()
+                let krwRate = convert(data: fetchedExchange)
+                let result = krwRate * forUSD
+                onKRWCalculated?("\(result) 원")
+            } catch {
+                onError?("환율 정보를 불러오지 못했습니다.")
+            }
+        }
     }
     
-    func calculateKRW(forUSD: Int) -> Int {
-        let krw = convert(data : exchangeModel.data)
-        return krw * forUSD
+    func fetchExchange() async throws -> String {
+        guard let url = URL(string: baseURLString) else {
+            return "0"
+        }
+        let request = URLRequest(url: url)
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        let decoded = try JSONDecoder().decode(ExchangeModel.self, from: data)
+        return decoded.data
     }
     
     private func convert(data: String) -> Int {
@@ -20,37 +37,5 @@ final class ExchangeViewModel {
             return 0
         }
         return converted
-    }
-    
-    func fetchExchange() async throws -> String {
-        guard let url = makeURL() else {
-            return "0"
-        }
-        let request = makeRequest(url: url)
-        let (data, _) = try await dataTask(request: request)
-        
-        return try decode(data: data)
-    }
-    
-    private func makeURL() -> URL? {
-        return URL(string: baseURLString)
-    }
-    
-    private func makeRequest(url: URL) -> URLRequest {
-        return URLRequest(url: url)
-    }
-    
-    private func dataTask(request: URLRequest) async throws -> (Data, URLResponse) {
-        return try await URLSession.shared.data(for: request)
-    }
-    
-    private func decode(data: Data) throws -> String {
-        do {
-            let decoded = try JSONDecoder().decode(ExchangeModel.self, from: data)
-            let exchange = decoded.data
-            return exchange
-        } catch {
-            throw NSError(domain: "ExchangeError", code: -1, userInfo: nil)
-        }
     }
 }

@@ -3,8 +3,7 @@ import UIKit
 final class ExchangeViewController: UIViewController {
     
     private let exchangeView = ExchangeView()
-    private var exchangeViewModel: ExchangeViewModel?
-    private var data = ""
+    private var exchangeViewModel = ExchangeViewModel()
     
     override func loadView() {
         view = exchangeView
@@ -16,6 +15,7 @@ final class ExchangeViewController: UIViewController {
         setView()
         setDelegate()
         setTargets()
+        bindData()
     }
     
     private func setView() {
@@ -40,6 +40,20 @@ final class ExchangeViewController: UIViewController {
         }
     }
     
+    private func bindData() {
+        exchangeViewModel.onKRWCalculated = { [weak self] resultText in
+            DispatchQueue.main.async {
+                self?.exchangeView.exchangeTextField.text = resultText
+            }
+        }
+        
+        exchangeViewModel.onError = { [weak self] errorMessage in
+            DispatchQueue.main.async {
+                self?.exchangeView.exchangeTextField.text = errorMessage
+            }
+        }
+    }
+    
     @objc
     private func checkButtonDidTap() {
         Task {
@@ -49,14 +63,7 @@ final class ExchangeViewController: UIViewController {
                 return
             }
             
-            let tempViewModel = ExchangeViewModel(exchangeModel: ExchangeModel(data: "0"))
-            let fetchedData = try await tempViewModel.fetchExchange()
-            
-            exchangeViewModel = ExchangeViewModel(exchangeModel: ExchangeModel(data: fetchedData))
-            
-            guard let model = exchangeViewModel else { return }
-            let result = model.calculateKRW(forUSD: usd)
-            exchangeView.exchangeTextField.text = "\(result) 원"
+            exchangeViewModel.fetchAndCalculateKRW(forUSD: usd)
         }
     }
     
@@ -65,8 +72,10 @@ final class ExchangeViewController: UIViewController {
         guard let text = exchangeView.inputTextField.text, !text.isEmpty else {
             return
         }
-        exchangeView.checkButton.backgroundColor = .systemBlue
-        exchangeView.checkButton.isEnabled = true
+        exchangeView.checkButton.do {
+            $0.backgroundColor = .systemBlue
+            $0.isEnabled = true
+        }
     }
 }
 
