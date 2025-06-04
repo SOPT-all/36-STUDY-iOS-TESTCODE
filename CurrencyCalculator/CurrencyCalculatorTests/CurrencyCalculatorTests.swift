@@ -17,8 +17,8 @@ final class CurrencyCalculatorTests: XCTestCase {
         //When
         let from = CurrencyType.KRW
         let to = CurrencyType.USD
-        let amount = 1300
-        let rate = 1300
+        let amount = 1300.0
+        let rate = 1300.0
         
         let result = calculator.convertToUSD(amount: amount,
                                              from: from,
@@ -36,8 +36,8 @@ final class CurrencyCalculatorTests: XCTestCase {
         //When
         let from = CurrencyType.USD
         let to = CurrencyType.KRW
-        let amount = 3
-        let rate = 1300
+        let amount = 3.0
+        let rate = 1300.0
         
         let result = calculator.convertToUSD(amount: amount,
                                              from: from,
@@ -55,8 +55,8 @@ final class CurrencyCalculatorTests: XCTestCase {
         //When
         let from = CurrencyType.KRW
         let to = CurrencyType.KRW
-        let amount = 300000
-        let rate = 1300
+        let amount = 300000.0
+        let rate = 1300.0
         
         let result = calculator.convertToUSD(amount: amount,
                                              from: from,

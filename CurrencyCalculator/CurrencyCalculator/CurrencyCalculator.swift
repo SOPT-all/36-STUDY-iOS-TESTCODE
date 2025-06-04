@@ -26,4 +26,11 @@ final class CurrencyCalculator {
         }
         return amount
     }
+    
+    func fetchCurrency() {
+        
+    }
+    
+    
+    
 }
