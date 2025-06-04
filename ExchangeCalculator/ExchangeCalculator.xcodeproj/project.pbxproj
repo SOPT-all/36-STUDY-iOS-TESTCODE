@@ -35,33 +35,47 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		189EBE0A2DF0291800ED59C2 /* Exceptions for "ExchangeCalculatorTests" folder in "ExchangeCalculator" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Model/ExchangeModelTests.swift,
+				Service/FetchExchangeServiceTests.swift,
+				ViewModel/ExchangeViewModelTests.swift,
+			);
+			target = 18EAA00B2DEFE055007D6782 /* ExchangeCalculator */;
+		};
+		189EBE0B2DF0291800ED59C2 /* Exceptions for "ExchangeCalculatorTests" folder in "ExchangeCalculatorTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Model/ExchangeModelTests.swift,
+				Service/FetchExchangeServiceTests.swift,
+				ViewModel/ExchangeViewModelTests.swift,
+			);
+			target = 18EAA0212DEFE056007D6782 /* ExchangeCalculatorTests */;
+		};
 		18EAA05D2DEFE578007D6782 /* Exceptions for "ExchangeCalculator" folder in "ExchangeCalculator" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				ExchangeCalculatorTests/Model/ExchangeModelTests.swift,
-				ExchangeCalculatorTests/Service/FetchExchangeServiceTests.swift,
-				ExchangeCalculatorTests/ViewModel/ExchangeViewModelTests.swift,
 				Global/Info.plist,
 			);
 			target = 18EAA00B2DEFE055007D6782 /* ExchangeCalculator */;
 		};
-		18EAA05E2DEFE578007D6782 /* Exceptions for "ExchangeCalculator" folder in "ExchangeCalculatorTests" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				ExchangeCalculatorTests/Model/ExchangeModelTests.swift,
-				ExchangeCalculatorTests/Service/FetchExchangeServiceTests.swift,
-				ExchangeCalculatorTests/ViewModel/ExchangeViewModelTests.swift,
-			);
-			target = 18EAA0212DEFE056007D6782 /* ExchangeCalculatorTests */;
-		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		189EBE062DF0291800ED59C2 /* ExchangeCalculatorTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				189EBE0A2DF0291800ED59C2 /* Exceptions for "ExchangeCalculatorTests" folder in "ExchangeCalculator" target */,
+				189EBE0B2DF0291800ED59C2 /* Exceptions for "ExchangeCalculatorTests" folder in "ExchangeCalculatorTests" target */,
+			);
+			path = ExchangeCalculatorTests;
+			sourceTree = "<group>";
+		};
 		18EAA00E2DEFE055007D6782 /* ExchangeCalculator */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				18EAA05D2DEFE578007D6782 /* Exceptions for "ExchangeCalculator" folder in "ExchangeCalculator" target */,
-				18EAA05E2DEFE578007D6782 /* Exceptions for "ExchangeCalculator" folder in "ExchangeCalculatorTests" target */,
 			);
 			path = ExchangeCalculator;
 			sourceTree = "<group>";
@@ -106,6 +120,7 @@
 				18EAA00E2DEFE055007D6782 /* ExchangeCalculator */,
 				18EAA02F2DEFE056007D6782 /* ExchangeCalculatorUITests */,
 				18EAA00D2DEFE055007D6782 /* Products */,
+				189EBE062DF0291800ED59C2 /* ExchangeCalculatorTests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -135,6 +150,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				189EBE062DF0291800ED59C2 /* ExchangeCalculatorTests */,
 				18EAA00E2DEFE055007D6782 /* ExchangeCalculator */,
 			);
 			name = ExchangeCalculator;
